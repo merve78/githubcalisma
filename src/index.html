@@ -1,0 +1,155 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="./output.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/> <!-- Animate.css -->
+<style>
+#slider-container {
+  width: 100vw;       /* Tam ekran genişlik */
+  height: 600px;      /* Sabit yükseklik */
+  overflow: hidden;   /* Taşmayı gizle */
+  position: relative; /* Slider içindeki absolute elemanlar için */
+}
+
+#slider {
+  display: flex;
+  width: 300vw; /* 3 slide x 100vw */
+  height: 100%;
+  transition: transform 0.7s ease-in-out;
+}
+
+#slider > div {
+  flex-shrink: 0;
+  width: 100vw;
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+#slider > div img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transform-origin: center center;
+  transition: transform 4s ease;
+}
+
+.zoom-in {
+  transform: scale(1.1);
+}
+</style>
+</head>
+<body>
+  
+<header>
+ <div class="flex justify-between items-center py-2 px-4">
+    <div>
+      <img src="images/logo1.png" alt="logo1" class="h-14">
+   </div>
+   <div class="flex gap-5 justify-between text-center">
+    <div>
+      <button class="bg-green-500 hover:bg-green-600 text-white font-semibold px-4 py-2 rounded cursor-pointer ">Teklif Al</button>
+    </div>
+    <a href="tel:+903123124141" 
+       class="inline-flex items-center bg-white hover:bg-fuchsia-300 text-green-600 font-semibold px-3 py-2 rounded">
+      <img src="images/tfn.png" alt="tlf" class="h-7"> <span class="ml-2">+90 312 312 41 41</span></a>
+  </div>
+</div>
+<nav class="flex items-center justify-between gab-1 px-8 py-3 font-semibold text-lg" >
+  <a href="1">Ana Sayfa</a>
+  <a href="2">Kurumsal</a>
+  <a href="3">Raporlama</a>
+  <a href="4">Danışmanlık</a>
+  <a href="5">Eğitim</a>
+  <a href="6">Referans</a>
+  <a href="7">Blok</a>
+  <a href="8">SSS</a>
+  <a href="9">İletişim</a>
+</nav>
+</header>
+
+<!-- Header buraya kadar -->
+<!-- Slider -->
+<section class="w-full overflow-hidden h-[600px]">
+  <div id="slider" class="flex transition-transform duration-700 ease-in-out">
+    
+    <div class="relative w-full flex-shrink-0">
+      <img src="images/product-carbon-footprint-greenhouse-gases.png" class="w-full h-full object-cover" alt="logo-1">
+      <div class="absolute inset-0 bg-opacity-30 flex flex-col justify-center items-center text-white">
+        <h2 class="text-3xl md:text-5xl font-bold animate__animated animate__fadeInDown js-animate-text">Doğadan Gelen Güzellik</h2>
+        <p class="mt-2 text-lg md:text-xl animate__animated animate__fadeInUp js-animate-text">Sağlık ve doğallık bir arada</p>
+        <button class="mt-4 bg-green-600 hover:bg-green-700 px-4 py-2 rounded cursor-pointer animate__animated animate__fadeInUp js-animate-text">Keşfet</button>
+      </div>
+    </div>
+    
+    <div class="relative w-full flex-shrink-0">
+      <img src="images/EU-Tax.jpg" class="w-full h-full object-cover" alt="EU-tax">
+      <div class="absolute inset-0 bg-opacity-30 flex flex-col justify-center items-center text-white">
+        <h2 class="text-3xl md:text-5xl font-bold animate__animated animate__fadeInDown js-animate-text">Karbon Ayak İzi</h2>
+        <p class="mt-2 text-lg md:text-xl animate__animated animate__fadeInUp js-animate-text">ISO Kalite Standartları</p>
+        <button class="mt-4 bg-green-600 hover:bg-green-700 px-4 py-2 rounded cursor-pointer animate__animated animate__fadeInUp js-animate-text">Devamı</button>
+      </div>
+    </div>
+
+     <div class="relative w-full flex-shrink-0">
+      <img src="images/ELF-illu-article-scaled.jpeg" class="w-full h-full object-cover" alt="EU-tax">
+      <div class="absolute inset-0 bg-opacity-30 flex flex-col justify-center items-center text-white">
+        <h2 class="text-3xl md:text-5xl font-bold animate__animated animate__fadeInDown js-animate-text">Doğal Ürün Koleksiyonu</h2>
+        <p class="mt-2 text-lg md:text-xl animate__animated animate__fadeInUp js-animate-text">Senin için en iyisi</p>
+        <button class="mt-4 bg-green-600 hover:bg-green-700 px-4 py-2 rounded cursor-pointer animate__animated animate__fadeInUp js-animate-text">Keşfet</button>
+      </div>
+    </div>
+
+  </div>
+</section>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const slider = document.getElementById('slider');
+  const slides = slider.children;
+  const totalSlides = slides.length;
+  let index = 0;
+
+  setInterval(() => {
+    // Slider'ı kaydır
+    index = (index + 1) % totalSlides;
+    slider.style.transform = `translateX(-${index * 100}vw)`;
+
+    // Zoom efekti
+    const imgs = slider.querySelectorAll('img');
+    imgs.forEach(img => img.classList.remove('zoom-in'));
+    const currentImg = slides[index].querySelector('img');
+    void currentImg.offsetWidth; // Reflow
+    currentImg.classList.add('zoom-in');
+
+    // Yazı animasyonlarını yeniden başlat
+    const animatedElements = slides[index].querySelectorAll('.js-animate-text');
+    animatedElements.forEach(el => {
+      el.classList.remove('animate__fadeInDown', 'animate__fadeInUp', 'animate__fadeOutDown', 'animate__fadeOutUp');
+      void el.offsetWidth; // Reflow
+      if (el.tagName === 'H2') {
+        el.classList.add('animate__fadeInDown');
+      } else {
+        el.classList.add('animate__fadeInUp');
+      }
+    });
+
+    // 2 saniye sonra yazıları kaybet
+    setTimeout(() => {
+      animatedElements.forEach(el => {
+        el.classList.remove('animate__fadeInDown', 'animate__fadeInUp');
+        if (el.tagName === 'H2') {
+          el.classList.add('animate__fadeOutUp'); // yukarı kaybol
+        } else {
+          el.classList.add('animate__fadeOutDown'); // aşağı kaybol
+        }
+      });
+    }, 3000); // 4 saniyelik döngünün yarısı
+
+  }, 4000); // her 4 saniyede bir slide değiş
+});
+
+</script>
+</body>
